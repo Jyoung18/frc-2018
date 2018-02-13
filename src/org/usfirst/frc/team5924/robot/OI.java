@@ -69,6 +69,20 @@ public class OI {
 		
 	}
 	
+	public boolean getIntakeButton(){
+		
+		
+		return buttonPanel.getRawButton(RobotConstants.intakeCubeButton);
+		
+	}
+	
+	public boolean getOuttakeButton(){
+		
+		
+		return buttonPanel.getRawButton(RobotConstants.outtakeCubeButton);
+		
+	}
+	
 	public double getXboxYAxis(){
 		
 		return xboxJoy.getRawAxis(RobotConstants.cXboxJoyYAxis);

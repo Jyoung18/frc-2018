@@ -34,7 +34,7 @@ public class RobotDrive extends Subsystem {
 	
 	public void driveRobotBase(){
 		
-		rDrive.arcadeDrive(Robot.m_oi.getXboxYAxis(), Robot.m_oi.getXboxXAxis());		
+		rDrive.arcadeDrive(Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());		
 	}
 
     public void initDefaultCommand() {

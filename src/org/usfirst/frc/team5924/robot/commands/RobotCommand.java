@@ -9,8 +9,6 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5924.robot.Robot;
-import org.usfirst.frc.team5924.robot.RobotConstants;
-import org.usfirst.frc.team5924.robot.RobotMechanisms;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -20,37 +18,46 @@ public class RobotCommand extends Command {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.kArmManipulator);
 		requires(Robot.kRobotDrive);
+		requires(Robot.kCubeManipulator);
 	}
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		
+		Robot.kArmManipulator.resetSensorPosition();
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		Robot.kRobotDrive.driveRobotBase();
+		//Robot.kArmManipulator.setPosition();
+		Robot.kArmManipulator.getSensorPosition();
+		
 		// ARM POSITION 
-		if(Robot.m_oi.getGroundPosButton()){
+		if(Robot.oi.getGroundPosButton()){
 			Robot.kArmManipulator.setGroundPosition();
 			
-		} else if(Robot.m_oi.getExchangePosButton()){
+		} else if(Robot.oi.getExchangePosButton()){
 			Robot.kArmManipulator.setExchangePosition();
 			
-		} else if(Robot.m_oi.getSwitchPosButton()){
+		} else if(Robot.oi.getSwitchPosButton()){
 			Robot.kArmManipulator.setSwitchPosition();
 			
-		} else if(Robot.m_oi.getStartPosButton()){
+		} else if(Robot.oi.getStartPosButton()){
 			Robot.kArmManipulator.setStartPosition();
 			
-		} else if(Robot.m_oi.getButtonPanelAxis() != 0){
+		} else if(Robot.oi.getButtonPanelAxis() != 0){
 			Robot.kArmManipulator.setRawPosition();
-			
 		}
-		
-		Robot.kRobotDrive.driveRobotBase();
-		
-		
+		// CUBE MANIPULATOR
+		if(Robot.oi.getIntakeButton()){
+			Robot.kCubeManipulator.intakeCube();
+		} else if (Robot.oi.getOuttakeButton()){
+			Robot.kCubeManipulator.outtakeCube();
+		}
 
 	}
 
