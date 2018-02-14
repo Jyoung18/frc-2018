@@ -16,6 +16,7 @@ import org.usfirst.frc.team5924.robot.commands.RobotCommand;
 import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -71,6 +72,7 @@ public class Robot extends TimedRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
+	Timer timer = new Timer();
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
@@ -81,7 +83,8 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-
+		timer.reset();
+		timer.start();
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -94,6 +97,29 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+
+		double maxSpeed = (4455 * 6 * Math.PI) / (60 * 10.75 * 12);
+		
+		while (timer.get() < 1.65) {
+			RobotDrive.rDrive.arcadeDrive(0.8, 0.0);
+			
+		}
+		//Turn 90 degr2ees to the right
+		while (timer.get() > 1.15 && timer.get() < 2.15)
+		
+		{
+			RobotDrive.rDrive.arcadeDrive(0.0, 0.5);
+		}
+		
+		
+		while (timer.get() > 1.65 && timer.get() < 2.65)
+			
+		{
+			RobotDrive.rDrive.arcadeDrive(0.6, 0);
+		}
+		
+		
+		
 	}
 
 	@Override

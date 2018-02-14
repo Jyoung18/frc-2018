@@ -53,7 +53,7 @@ public class OI {
 	
 	public boolean getExchangePosButton(){
 		
-		return buttonPanel.getRawButton(RobotConstants.groundPosButton);
+		return buttonPanel.getRawButton(RobotConstants.exchangePosButton);
 		
 	}
 	

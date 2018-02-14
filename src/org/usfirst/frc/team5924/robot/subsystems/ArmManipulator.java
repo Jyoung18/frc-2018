@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
-	private double currentPosition = 0.0;
+	private double currentPosition;
 	private Timer timer = new Timer();
 
     // Put methods for controlling this subsystem
@@ -37,18 +37,27 @@ public class ArmManipulator extends Subsystem{
 	public ArmManipulator(){
 		
 		actuatorTalon.config_kF(0, 0.0, 10);
-		actuatorTalon.config_kP(0, 7.0065, 10); //7.007
-		actuatorTalon.config_kI(0, 0.006, 10); //.006
-		actuatorTalon.config_kD(0, 0.0001, 10);
+		actuatorTalon.config_kP(0, 7.45, 10); //7.0065
+		actuatorTalon.config_kI(0, 0.000655, 10); //.006
+		actuatorTalon.config_kD(0, 0.00007, 10);
 		actuatorTalon.setInverted(false);
 		actuatorTalon.setSensorPhase(false);
+		actuatorTalon.configForwardSoftLimitThreshold(415, 0);
+		actuatorTalon.configForwardSoftLimitEnable(true, 0);
+		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
+		actuatorTalon.configReverseSoftLimitEnable(true, 0);
 	}
+	
 	
 	public void resetSensorPosition(){
 		
-		//actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
-		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		//Pot
+		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
+		
+		//Encoder
+		//actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		
 		
 	}
 	
@@ -93,7 +102,6 @@ public class ArmManipulator extends Subsystem{
     }
     
     public void setRawPosition(){
-    	
     	actuatorTalon.set(Robot.oi.getButtonPanelAxis() * 0.25);
     	
     }

@@ -18,15 +18,15 @@ public class RobotDrive extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private WPI_TalonSRX frontRight = new WPI_TalonSRX(RobotConstants.cFrontRight);
-	private WPI_TalonSRX rearRight = new WPI_TalonSRX(RobotConstants.cRearRight);
-	private WPI_TalonSRX frontLeft = new WPI_TalonSRX(RobotConstants.cFrontLeft);
-	private WPI_TalonSRX rearLeft = new WPI_TalonSRX(RobotConstants.cRearLeft);
+	private static WPI_TalonSRX frontRight = new WPI_TalonSRX(RobotConstants.cFrontRight);
+	private static WPI_TalonSRX rearRight = new WPI_TalonSRX(RobotConstants.cRearRight);
+	private static WPI_TalonSRX frontLeft = new WPI_TalonSRX(RobotConstants.cFrontLeft);
+	private static WPI_TalonSRX rearLeft = new WPI_TalonSRX(RobotConstants.cRearLeft);
 	
-	private SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
-	private SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
+	private static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
+	private static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 	
-	private DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
+	public static DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
 	
 	public RobotDrive(){
 		

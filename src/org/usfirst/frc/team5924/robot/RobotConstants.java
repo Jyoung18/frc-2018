@@ -27,7 +27,7 @@ public class RobotConstants {
 		public static int cButtonPanelAxis = 1;
 		
 		// POSITIONS
-		public static double groundPosition = 0.0;
+		public static double groundPosition = 20.0;
 		public static double exchangePosition = 40.0;
 		public static double switchPosition = 310.0;
 		public static double startPosition = 390.0;
