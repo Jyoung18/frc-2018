@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5924.robot.subsystems;
 
 import org.usfirst.frc.team5924.robot.RobotConstants;
-import org.usfirst.frc.team5924.robot.commands.RobotCommand;
+import org.usfirst.frc.team5924.robot.commands.TeleCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -38,7 +38,7 @@ public class CubeManipulator extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new RobotCommand());
+    	//setDefaultCommand(new TeleCommand());
     }
 }
 

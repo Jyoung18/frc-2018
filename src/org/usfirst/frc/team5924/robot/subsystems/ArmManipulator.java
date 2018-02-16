@@ -9,7 +9,7 @@ package org.usfirst.frc.team5924.robot.subsystems;
 
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
-import org.usfirst.frc.team5924.robot.commands.RobotCommand;
+import org.usfirst.frc.team5924.robot.commands.TeleCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -43,16 +43,16 @@ public class ArmManipulator extends Subsystem{
 		actuatorTalon.setInverted(false);
 		actuatorTalon.setSensorPhase(false);
 		actuatorTalon.configForwardSoftLimitThreshold(415, 0);
-		actuatorTalon.configForwardSoftLimitEnable(true, 0);
+		actuatorTalon.configForwardSoftLimitEnable(false, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
-		actuatorTalon.configReverseSoftLimitEnable(true, 0);
+		actuatorTalon.configReverseSoftLimitEnable(false, 0);
 	}
 	
 	
 	public void resetSensorPosition(){
 		
 		//Pot
-		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
+		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
 		//Encoder
@@ -89,14 +89,14 @@ public class ArmManipulator extends Subsystem{
     
     public void setSwitchPosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, RobotConstants.switchPosition);
+    	actuatorTalon.set(ControlMode.Position, -4000);
     	currentPosition = RobotConstants.switchPosition;
     	
     }
     
     public void setStartPosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, RobotConstants.startPosition);
+    	actuatorTalon.set(ControlMode.Position, 4000);
     	currentPosition = RobotConstants.startPosition;
     	
     }
@@ -110,7 +110,7 @@ public class ArmManipulator extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-		setDefaultCommand(new RobotCommand());
+		//setDefaultCommand(new TeleCommand());
     	
     }
     

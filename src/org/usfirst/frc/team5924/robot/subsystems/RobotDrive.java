@@ -2,7 +2,8 @@ package org.usfirst.frc.team5924.robot.subsystems;
 
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
-import org.usfirst.frc.team5924.robot.commands.RobotCommand;
+import org.usfirst.frc.team5924.robot.commands.AutoCommand;
+import org.usfirst.frc.team5924.robot.commands.TeleCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -26,7 +27,7 @@ public class RobotDrive extends Subsystem {
 	private static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
 	private static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 	
-	public static DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
+	private static DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
 	
 	public RobotDrive(){
 		
@@ -34,12 +35,18 @@ public class RobotDrive extends Subsystem {
 	
 	public void driveRobotBase(){
 		
-		rDrive.arcadeDrive(Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());		
-	}
+		rDrive.arcadeDrive(Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());	
 
+	}
+	
+	public void autoDrive(){
+		
+		rDrive.arcadeDrive(0.5, 0);
+		
+	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new RobotCommand());
+        //setDefaultCommand(new AutoCommand());
     }
 }
 

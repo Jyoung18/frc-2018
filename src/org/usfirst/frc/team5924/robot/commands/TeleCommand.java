@@ -9,29 +9,31 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5924.robot.Robot;
+import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class RobotCommand extends Command {
-	public RobotCommand() {
+public class TeleCommand extends Command {
+	public TeleCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.kArmManipulator);
 		requires(Robot.kRobotDrive);
 		requires(Robot.kCubeManipulator);
 	}
-
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		
 		Robot.kArmManipulator.resetSensorPosition();
-
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
 		Robot.kRobotDrive.driveRobotBase();
 		//Robot.kArmManipulator.setPosition();
 		Robot.kArmManipulator.getSensorPosition();
@@ -58,7 +60,7 @@ public class RobotCommand extends Command {
 		} else if (Robot.oi.getOuttakeButton()){
 			Robot.kCubeManipulator.outtakeCube();
 		}
-
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team5924.robot.commands.RobotCommand;
+
+import org.usfirst.frc.team5924.robot.commands.AutoCommand;
+import org.usfirst.frc.team5924.robot.commands.TeleCommand;
 import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
@@ -30,9 +32,12 @@ public class Robot extends TimedRobot {
 	public static final RobotDrive kRobotDrive = new RobotDrive();
 	public static final CubeManipulator kCubeManipulator = new CubeManipulator();
 	public static OI oi = new OI();
+	
+	Command autonomousCommand;
+	Command teleCommand;
 
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	//Command m_selectedCommand;
+	//SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -41,9 +46,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 	
-		m_chooser.addDefault("Default Auto", new RobotCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		//m_chooser.addDefault("Default Auto", new TeleCommand());
+		//m_chooser.addObject("My Auto", new AutoCommand());
+		//SmartDashboard.putData("Auto mode", m_chooser);
+		autonomousCommand = new AutoCommand();
+		teleCommand = new TeleCommand();
 	}
 
 	/**
@@ -72,22 +79,20 @@ public class Robot extends TimedRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
-	Timer timer = new Timer();
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-		timer.reset();
-		timer.start();
+		//m_selectedCommand = m_chooser.getSelected();
+		//System.out.println(m_selectedCommand);
+		
+		/**String autoSelected = SmartDashboard.getString("Auto Selector",
+		"Default"); switch(autoSelected) { case "My Auto": selectedCommand
+		= new TeleCommand(); break; case "Default Auto": default:
+		selectedCommand = new AutoCommand(); break; }
+		
+		**/
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
 		}
 	}
 
@@ -97,9 +102,24 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-		double maxSpeed = (4455 * 6 * Math.PI) / (60 * 10.75 * 12);
+		System.out.println("Yes");
+		/**double maxSpeed = (4455 * 6 * Math.PI) / (60 * 10.75 * 12);
+		// ENTER STARTING POSITION (left, right, or middle)
+		String startingPosition = null;
 		
+		if (startingPosition == "left") {
+			// go forward
+			// turn right
+		}
+		
+		else if (startingPosition == "right") {
+			// go forward
+			// turn left
+		}
+		
+		else if (startingPosition == "middle") {
+			// go forward
+		}
 		while (timer.get() < 1.65) {
 			RobotDrive.rDrive.arcadeDrive(0.8, 0.0);
 			
@@ -116,7 +136,7 @@ public class Robot extends TimedRobot {
 			
 		{
 			RobotDrive.rDrive.arcadeDrive(0.6, 0);
-		}
+		} **/
 		
 		
 		
@@ -128,8 +148,11 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+			
+		teleCommand.start();
+			
 		}
 	}
 
