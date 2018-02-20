@@ -7,26 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoCommand extends Command {
+public class CubeCommand extends Command {
 
-    public AutoCommand() {
+    public CubeCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.kRobotDrive);
+    	requires(Robot.kCubeManipulator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.kRobotDrive.autoDrive();
+    	
+    	/**
+		// CUBE MANIPULATOR
+		if(Robot.oi.getIntakeButton()){
+			Robot.kCubeManipulator.intakeCube();
+			
+		} else if (Robot.oi.getOuttakeButton()){
+			Robot.kCubeManipulator.outtakeCube();
+			
+		}
+		**/
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished(){
+    protected boolean isFinished() {
         return false;
     }
 

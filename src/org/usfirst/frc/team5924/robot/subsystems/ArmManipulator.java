@@ -9,7 +9,8 @@ package org.usfirst.frc.team5924.robot.subsystems;
 
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
-import org.usfirst.frc.team5924.robot.commands.TeleCommand;
+import org.usfirst.frc.team5924.robot.commands.ArmCommand;
+import org.usfirst.frc.team5924.robot.commands.DriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -18,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -28,8 +30,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
-	private double currentPosition;
-	private Timer timer = new Timer();
+	private double positionTarget = 390.0;
+	private int buttonToggle = 0;
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -37,22 +39,20 @@ public class ArmManipulator extends Subsystem{
 	public ArmManipulator(){
 		
 		actuatorTalon.config_kF(0, 0.0, 10);
-		actuatorTalon.config_kP(0, 7.45, 10); //7.0065
-		actuatorTalon.config_kI(0, 0.000655, 10); //.006
-		actuatorTalon.config_kD(0, 0.00007, 10);
-		actuatorTalon.setInverted(false);
-		actuatorTalon.setSensorPhase(false);
-		actuatorTalon.configForwardSoftLimitThreshold(415, 0);
-		actuatorTalon.configForwardSoftLimitEnable(false, 0);
+		actuatorTalon.config_kP(0, 25.25, 10); //25.25
+		actuatorTalon.config_kI(0, 0.00015, 10); //.00015
+		actuatorTalon.config_kD(0, 0.0, 10);
+		actuatorTalon.configForwardSoftLimitThreshold(400, 0);
+		actuatorTalon.configForwardSoftLimitEnable(true, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
-		actuatorTalon.configReverseSoftLimitEnable(false, 0);
+		actuatorTalon.configReverseSoftLimitEnable(true, 0);
 	}
 	
 	
-	public void resetSensorPosition(){
+	public void selectSensor(){
 		
 		//Pot
-		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
 		//Encoder
@@ -61,48 +61,73 @@ public class ArmManipulator extends Subsystem{
 		
 	}
 	
-	public void getSensorPosition(){
+	public void printMotorVoltage(){
 		
+		SmartDashboard.putNumber("Actuator Talon Voltage", actuatorTalon.getMotorOutputVoltage());
+		
+	}
+	
+	public void printSensorPosition(){
+		
+		SmartDashboard.putNumber("Potentiometer Position", actuatorTalon.getSelectedSensorPosition(0));
 		System.out.println(actuatorTalon.getSelectedSensorPosition(0));
-
+		
 	}
 	
 	public void setPosition(){
 		
-		actuatorTalon.set(ControlMode.Position, currentPosition);
-		
+		actuatorTalon.set(ControlMode.Position, positionTarget);
+			
 	}
    
     public void setGroundPosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, RobotConstants.groundPosition);
-    	currentPosition = RobotConstants.groundPosition;
+    	//actuatorTalon.set(ControlMode.Position, RobotConstants.groundPosition);
+    	positionTarget = RobotConstants.groundPosition;
     	
     }
     
     public void setExchangePosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, RobotConstants.exchangePosition);
-    	currentPosition = RobotConstants.exchangePosition;
+    	//actuatorTalon.set(ControlMode.Position, RobotConstants.exchangePosition);
+    	positionTarget = RobotConstants.exchangePosition;
     	
     }
     
     public void setSwitchPosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, -4000);
-    	currentPosition = RobotConstants.switchPosition;
+    	//actuatorTalon.set(ControlMode.Position, RobotConstants.switchPosition);
+    	positionTarget = RobotConstants.switchPosition;
     	
     }
     
     public void setStartPosition(){
     	
-    	actuatorTalon.set(ControlMode.Position, 4000);
-    	currentPosition = RobotConstants.startPosition;
+    	//actuatorTalon.set(ControlMode.Position, RobotConstants.startPosition);
+    	positionTarget = RobotConstants.startPosition;
     	
     }
     
     public void setRawPosition(){
-    	actuatorTalon.set(Robot.oi.getButtonPanelAxis() * 0.25);
+    	
+    	actuatorTalon.set(ControlMode.PercentOutput, Robot.oi.getButtonPanelAxis() * 0.25);
+    		
+    }
+    
+    public void checkButtonToggle(){
+    	
+    	if(Robot.oi.toggleControlMode()){
+    		buttonToggle = buttonToggle + 1;
+    	}
+    	
+    	if((buttonToggle % 2) == 0){
+    		setPosition();
+    		SmartDashboard.putString("Control Mode", "Position");
+    		
+    	} else {
+    		setRawPosition();
+    		SmartDashboard.putString("Control Mode", "Voltage");
+    	}
     	
     }
    
@@ -110,8 +135,7 @@ public class ArmManipulator extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-		//setDefaultCommand(new TeleCommand());
+		setDefaultCommand(new ArmCommand());
     	
     }
-    
 }

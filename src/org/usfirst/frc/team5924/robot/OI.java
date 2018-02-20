@@ -83,6 +83,12 @@ public class OI {
 		
 	}
 	
+	public boolean toggleControlMode(){
+		
+		return buttonPanel.getRawButtonPressed(RobotConstants.switchControlMode);
+		
+	}
+	
 	public double getXboxYAxis(){
 		
 		return xboxJoy.getRawAxis(RobotConstants.cXboxJoyYAxis);

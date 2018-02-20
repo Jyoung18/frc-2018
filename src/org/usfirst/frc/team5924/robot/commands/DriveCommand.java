@@ -10,23 +10,25 @@ package org.usfirst.frc.team5924.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.Timer;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class TeleCommand extends Command {
-	public TeleCommand() {
+public class DriveCommand extends Command {
+	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kArmManipulator);
 		requires(Robot.kRobotDrive);
-		requires(Robot.kCubeManipulator);
+		
 	}
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
 		
-		Robot.kArmManipulator.resetSensorPosition();
+		//Robot.kEncoderTesting.selectSensor();
 		
 	}
 
@@ -35,31 +37,7 @@ public class TeleCommand extends Command {
 	protected void execute() {
 		
 		Robot.kRobotDrive.driveRobotBase();
-		//Robot.kArmManipulator.setPosition();
-		Robot.kArmManipulator.getSensorPosition();
-		
-		// ARM POSITION 
-		if(Robot.oi.getGroundPosButton()){
-			Robot.kArmManipulator.setGroundPosition();
-			
-		} else if(Robot.oi.getExchangePosButton()){
-			Robot.kArmManipulator.setExchangePosition();
-			
-		} else if(Robot.oi.getSwitchPosButton()){
-			Robot.kArmManipulator.setSwitchPosition();
-			
-		} else if(Robot.oi.getStartPosButton()){
-			Robot.kArmManipulator.setStartPosition();
-			
-		} else if(Robot.oi.getButtonPanelAxis() != 0){
-			Robot.kArmManipulator.setRawPosition();
-		}
-		// CUBE MANIPULATOR
-		if(Robot.oi.getIntakeButton()){
-			Robot.kCubeManipulator.intakeCube();
-		} else if (Robot.oi.getOuttakeButton()){
-			Robot.kCubeManipulator.outtakeCube();
-		}
+		Robot.kRobotDrive.printMotorVoltage();
 		
 	}
 

@@ -2,10 +2,10 @@ package org.usfirst.frc.team5924.robot;
 
 public class RobotConstants {
 	// MOTOR CONTROLLER ID
-		public static int cFrontRight = 1;
-		public static int cRearRight = 2;
-		public static int cRearLeft = 4;
-		public static int cFrontLeft = 5;
+		public static int cFrontRight = 1; //7
+		public static int cRearRight = 2; //6
+		public static int cRearLeft = 4; //1
+		public static int cFrontLeft = 5; //11
 		public static int cActuator = 3;
 		public static int cCubeRight = 6;
 		public static int cCubeLeft = 7;
@@ -45,4 +45,5 @@ public class RobotConstants {
 		public static int intakeCubeButton = 7;
 		public static int outtakeCubeButton = 9;
 		public static int driveTrainButton = 1;
+		public static int switchControlMode = 11;
 }
