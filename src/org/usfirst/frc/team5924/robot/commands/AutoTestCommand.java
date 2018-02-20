@@ -12,7 +12,7 @@ public class AutoTestCommand extends Command {
     public AutoTestCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.kRobotDrive);
+    	requires(Robot.kArmManipulator);
     }
 
     // Called just before this Command runs the first time
@@ -22,17 +22,20 @@ public class AutoTestCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.kRobotDrive.autoTestDrive();
+    	Robot.kArmManipulator.armAuto();
+    	Robot.kArmManipulator.printMotorVoltage();
+    	Robot.kArmManipulator.printSensorPosition();
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.kArmManipulator.armAutoCheck();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Yes");
     }
 
     // Called when another command which requires one or more of the same

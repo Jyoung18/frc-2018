@@ -2,34 +2,34 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import org.usfirst.frc.team5924.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-/**public class EncoderCommand extends Command {
+public class RightDriveCommand extends Command {
+	
+	String gameData;
 
-    public EncoderCommand() {
+    public RightDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.kEncoderTesting);
+    	requires(Robot.kRobotDrive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
+    	gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.kEncoderTesting.printSelectedSensorPos();
-		
-		if(Robot.oi.getGroundPosButton()){
-			Robot.kEncoderTesting.testyTesting1();
-		} else if(Robot.oi.getExchangePosButton()){
-			Robot.kEncoderTesting.testyTesting2();
-		}
-		
+    	Robot.kRobotDrive.checkAutoDrive(gameData);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -45,4 +45,4 @@ import edu.wpi.first.wpilibj.command.Command;
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-} **/
+}

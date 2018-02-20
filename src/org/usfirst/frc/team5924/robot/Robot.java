@@ -11,6 +11,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,9 +19,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5924.robot.commands.AutoCommand;
+import org.usfirst.frc.team5924.robot.commands.RightAutoCommand;
 import org.usfirst.frc.team5924.robot.commands.AutoTestCommand;
+import org.usfirst.frc.team5924.robot.commands.CenterDriveCommand;
 import org.usfirst.frc.team5924.robot.commands.DriveCommand;
+import org.usfirst.frc.team5924.robot.commands.RightDriveCommand;
 import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.EncoderTesting;
@@ -38,11 +41,9 @@ public class Robot extends TimedRobot {
 	public static final ArmManipulator kArmManipulator = new ArmManipulator();
 	public static final RobotDrive kRobotDrive = new RobotDrive();
 	public static final CubeManipulator kCubeManipulator = new CubeManipulator();
-	public static final EncoderTesting kEncoderTesting = new EncoderTesting();
+	//public static final EncoderTesting kEncoderTesting = new EncoderTesting();
 	public static OI oi = new OI();
 	
-	//Command autonomousCommand;
-
 	Command m_selectedCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -53,14 +54,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 	
-		m_chooser.addDefault("Default Auto", new AutoCommand());
-		m_chooser.addObject("My Auto", new AutoTestCommand());
+		m_chooser.addDefault("Default Auto", new CenterDriveCommand());
+		m_chooser.addObject("My Auto", new RightAutoCommand());
+		m_chooser.addObject("Test Auto", new RightDriveCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		//autonomousCommand = new AutoCommand();
-		UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
-		UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();
-		rampCam.setResolution(640, 480);
-		armCam.setResolution(640, 480);
+		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
+		//UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();
+		//rampCam.setResolution(640, 480);
+		//armCam.setResolution(640, 480);
 		
 	}
 
@@ -93,7 +95,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_selectedCommand = m_chooser.getSelected();
-		System.out.println(m_selectedCommand);
 		
 		/**String autoSelected = SmartDashboard.getString("Auto Selector",
 		"Default"); switch(autoSelected) { case "My Auto": selectedCommand
@@ -159,8 +160,10 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		//if (autonomousCommand != null) {
-		//	autonomousCommand.cancel();
+		if (m_selectedCommand != null) {
+			m_selectedCommand.cancel();
+			
+		}
 			
 		//teleCommand.start();
 			

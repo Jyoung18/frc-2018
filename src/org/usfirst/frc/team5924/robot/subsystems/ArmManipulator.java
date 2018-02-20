@@ -31,6 +31,7 @@ public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
 	private double positionTarget = 390.0;
+	private double autoPosTarget = 310.0;
 	private int buttonToggle = 0;
 
     // Put methods for controlling this subsystem
@@ -70,7 +71,6 @@ public class ArmManipulator extends Subsystem{
 	public void printSensorPosition(){
 		
 		SmartDashboard.putNumber("Potentiometer Position", actuatorTalon.getSelectedSensorPosition(0));
-		System.out.println(actuatorTalon.getSelectedSensorPosition(0));
 		
 	}
 	
@@ -130,12 +130,25 @@ public class ArmManipulator extends Subsystem{
     	}
     	
     }
-   
+    
+    public void armAuto(){
+    	actuatorTalon.set(ControlMode.Position, autoPosTarget);
+    	
+    }
+    
+    public boolean armAutoCheck(){
+    	if(actuatorTalon.getSelectedSensorPosition(0) > autoPosTarget - 1 && actuatorTalon.getSelectedSensorPosition(0) > autoPosTarget + 1){
+    		return true;
+    	}
+    	return false;
+    	
+    }
+
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-		setDefaultCommand(new ArmCommand());
+		//setDefaultCommand(new ArmCommand());
     	
     }
 }
