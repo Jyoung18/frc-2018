@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RightAutoCommand extends CommandGroup {
+public class LeftAutoCommand extends CommandGroup {
 
-    public RightAutoCommand() {
+    public LeftAutoCommand() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addParallel(new RightDriveCommand());
+    	addParallel(new LeftDriveCommand());
     	addParallel(new ArmAutoCommand());
 
         // To run multiple commands at the same time,

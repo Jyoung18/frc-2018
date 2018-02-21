@@ -13,7 +13,7 @@ public class CenterAutoCommand extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	addParallel(new CenterDriveCommand());
-    	addParallel(new ArmCommand());
+    	addParallel(new ArmAutoCommand());
 
         // To run multiple commands at the same time,
         // use addParallel()

@@ -2,7 +2,6 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import org.usfirst.frc.team5924.robot.Robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -29,6 +28,7 @@ public class ArmCommand extends Command {
     	Robot.kArmManipulator.checkButtonToggle();
     	Robot.kArmManipulator.printSensorPosition();
     	Robot.kArmManipulator.printMotorVoltage();
+    	Robot.kArmManipulator.printSelectedPosition();
 		
 		if(Robot.oi.getGroundPosButton()){
 			Robot.kArmManipulator.setGroundPosition();
@@ -43,6 +43,7 @@ public class ArmCommand extends Command {
 			Robot.kArmManipulator.setStartPosition();
 			
 		}
+		
 			
 		
     	

@@ -7,28 +7,19 @@
 
 package org.usfirst.frc.team5924.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import org.usfirst.frc.team5924.robot.commands.CenterAutoCommand;
+import org.usfirst.frc.team5924.robot.commands.LeftAutoCommand;
+import org.usfirst.frc.team5924.robot.commands.RightAutoCommand;
+import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
+import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
+import org.usfirst.frc.team5924.robot.subsystems.RampManipulator;
+import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team5924.robot.commands.RightAutoCommand;
-import org.usfirst.frc.team5924.robot.commands.AutoTestCommand;
-import org.usfirst.frc.team5924.robot.commands.CenterDriveCommand;
-import org.usfirst.frc.team5924.robot.commands.DriveCommand;
-import org.usfirst.frc.team5924.robot.commands.RightDriveCommand;
-import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
-import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
-import org.usfirst.frc.team5924.robot.subsystems.EncoderTesting;
-import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,8 +31,8 @@ import edu.wpi.first.wpilibj.Timer;
 public class Robot extends TimedRobot {
 	public static final ArmManipulator kArmManipulator = new ArmManipulator();
 	public static final RobotDrive kRobotDrive = new RobotDrive();
-	public static final CubeManipulator kCubeManipulator = new CubeManipulator();
-	//public static final EncoderTesting kEncoderTesting = new EncoderTesting();
+	//public static final CubeManipulator kCubeManipulator = new CubeManipulator();
+	//public static final RampManipulator kRampManipulator = new RampManipulator();
 	public static OI oi = new OI();
 	
 	Command m_selectedCommand;
@@ -54,9 +45,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 	
-		m_chooser.addDefault("Default Auto", new CenterDriveCommand());
-		m_chooser.addObject("My Auto", new RightAutoCommand());
-		m_chooser.addObject("Test Auto", new RightDriveCommand());
+		m_chooser.addDefault("Center Auto", new CenterAutoCommand());
+		m_chooser.addObject("Right Auto", new RightAutoCommand());
+		m_chooser.addObject("Left Auto", new LeftAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		//autonomousCommand = new AutoCommand();
 		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();

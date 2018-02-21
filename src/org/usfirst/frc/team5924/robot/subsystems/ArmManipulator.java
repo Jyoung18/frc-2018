@@ -10,14 +10,10 @@ package org.usfirst.frc.team5924.robot.subsystems;
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
 import org.usfirst.frc.team5924.robot.commands.ArmCommand;
-import org.usfirst.frc.team5924.robot.commands.DriveCommand;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,6 +29,7 @@ public class ArmManipulator extends Subsystem{
 	private double positionTarget = 390.0;
 	private double autoPosTarget = 310.0;
 	private int buttonToggle = 0;
+	private String actuatorPosition = "Start Position";
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -43,22 +40,23 @@ public class ArmManipulator extends Subsystem{
 		actuatorTalon.config_kP(0, 25.25, 10); //25.25
 		actuatorTalon.config_kI(0, 0.00015, 10); //.00015
 		actuatorTalon.config_kD(0, 0.0, 10);
-		actuatorTalon.configForwardSoftLimitThreshold(400, 0);
+		actuatorTalon.configForwardSoftLimitThreshold(450, 0);
 		actuatorTalon.configForwardSoftLimitEnable(true, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
 		actuatorTalon.configReverseSoftLimitEnable(true, 0);
 	}
-	
-	
+	//SELECT FEEDBACK SENSOR
 	public void selectSensor(){
 		
 		//Pot
 		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
-		//Encoder
-		//actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+	}
+	//OUTPUT INFO TO SMARTDASHBOARD
+	public void printSelectedPosition(){
 		
+		SmartDashboard.putString("Selected Position", actuatorPosition);
 		
 	}
 	
@@ -73,7 +71,7 @@ public class ArmManipulator extends Subsystem{
 		SmartDashboard.putNumber("Potentiometer Position", actuatorTalon.getSelectedSensorPosition(0));
 		
 	}
-	
+	//CLOSED LOOP POSITION SETTING
 	public void setPosition(){
 		
 		actuatorTalon.set(ControlMode.Position, positionTarget);
@@ -84,6 +82,7 @@ public class ArmManipulator extends Subsystem{
     	
     	//actuatorTalon.set(ControlMode.Position, RobotConstants.groundPosition);
     	positionTarget = RobotConstants.groundPosition;
+    	actuatorPosition = "Ground Position";
     	
     }
     
@@ -91,6 +90,7 @@ public class ArmManipulator extends Subsystem{
     	
     	//actuatorTalon.set(ControlMode.Position, RobotConstants.exchangePosition);
     	positionTarget = RobotConstants.exchangePosition;
+    	actuatorPosition = "Exchange Position";
     	
     }
     
@@ -98,6 +98,7 @@ public class ArmManipulator extends Subsystem{
     	
     	//actuatorTalon.set(ControlMode.Position, RobotConstants.switchPosition);
     	positionTarget = RobotConstants.switchPosition;
+    	actuatorPosition = "Switch Position";
     	
     }
     
@@ -105,15 +106,16 @@ public class ArmManipulator extends Subsystem{
     	
     	//actuatorTalon.set(ControlMode.Position, RobotConstants.startPosition);
     	positionTarget = RobotConstants.startPosition;
+    	actuatorPosition = "Start Position";
     	
     }
-    
+    //OPEN LOOP POSITION SETTING
     public void setRawPosition(){
     	
     	actuatorTalon.set(ControlMode.PercentOutput, Robot.oi.getButtonPanelAxis() * 0.25);
     		
     }
-    
+    //SWITCH CONTROL MODE
     public void checkButtonToggle(){
     	
     	if(Robot.oi.toggleControlMode()){
@@ -130,7 +132,7 @@ public class ArmManipulator extends Subsystem{
     	}
     	
     }
-    
+    //AUTO CODE
     public void armAuto(){
     	actuatorTalon.set(ControlMode.Position, autoPosTarget);
     	
@@ -148,7 +150,7 @@ public class ArmManipulator extends Subsystem{
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 		
-		//setDefaultCommand(new ArmCommand());
+		setDefaultCommand(new ArmCommand());
     	
     }
 }

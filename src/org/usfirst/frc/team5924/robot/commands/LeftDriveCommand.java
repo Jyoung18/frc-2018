@@ -2,40 +2,42 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import org.usfirst.frc.team5924.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutoTestCommand extends Command {
+public class LeftDriveCommand extends Command {
 
-    public AutoTestCommand() {
+	String gameData;
+	
+    public LeftDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.kArmManipulator);
+    	requires(Robot.kRobotDrive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.kRobotDrive.driveTimer();
+    	gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	Robot.kArmManipulator.armAuto();
-    	Robot.kArmManipulator.printMotorVoltage();
-    	Robot.kArmManipulator.printSensorPosition();
-    	
+    	Robot.kRobotDrive.printMotorVoltage();
+    	Robot.kRobotDrive.checkLeftAutoDrive(gameData);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.kArmManipulator.armAutoCheck();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("Yes");
     }
 
     // Called when another command which requires one or more of the same

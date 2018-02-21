@@ -7,28 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-/**public class EncoderCommand extends Command {
+public class RampCommand extends Command {
 
-    public EncoderCommand() {
+    public RampCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.kEncoderTesting);
+    	//requires(Robot.kRampManipulator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//Robot.kRampManipulator.selectSensor();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.kEncoderTesting.printSelectedSensorPos();
+    	/**
+    	Robot.kRampManipulator.printSelectedSensorPos();
 		
 		if(Robot.oi.getGroundPosButton()){
-			Robot.kEncoderTesting.testyTesting1();
+			Robot.kRampManipulator.setBackRampVerticalPosition();
 		} else if(Robot.oi.getExchangePosButton()){
-			Robot.kEncoderTesting.testyTesting2();
+			Robot.kRampManipulator.setBackRampDownPosition();
+		} else if(Robot.oi.getButtonPanelAxis() != 0){
+			Robot.kRampManipulator.manualMove();
 		}
+		
+		Robot.kRampManipulator.setBackRampPosition();
+		Robot.kRampManipulator.setFrontRampPosition();
+		**/
 		
     }
 
@@ -45,4 +53,4 @@ import edu.wpi.first.wpilibj.command.Command;
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-} **/
+}

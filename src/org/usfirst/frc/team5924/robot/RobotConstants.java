@@ -2,17 +2,17 @@ package org.usfirst.frc.team5924.robot;
 
 public class RobotConstants {
 	// MOTOR CONTROLLER ID
-		public static int cFrontRight = 1; //7
-		public static int cRearRight = 2; //6
-		public static int cRearLeft = 4; //1
-		public static int cFrontLeft = 5; //11
-		public static int cActuator = 3;
+		public static int cFrontRight = 7; //7
+		public static int cRearRight = 6; //6
+		public static int cRearLeft = 1; //1
+		public static int cFrontLeft = 11; //11
+		public static int cActuator = 5; //5
 		public static int cCubeRight = 6;
 		public static int cCubeLeft = 7;
-		public static int cRampMotor1 = 8;
-		public static int cRampMotor2 = 9;
-		public static int cRampMotor3 = 10;
-		public static int cRampMotor4 = 11;
+		public static int cBackRampMotorRight = 8;
+		public static int cBackRampMotorLeft = 9;
+		public static int cFrontRampMotorRight = 10;
+		public static int cFrontRampMotorLeft = 11;
 		
 		//PNEUMATIC ID
 		//public static int compressor = ;
@@ -31,6 +31,9 @@ public class RobotConstants {
 		public static double exchangePosition = 40.0;
 		public static double switchPosition = 310.0;
 		public static double startPosition = 390.0;
+		public static double bRampDownPosition = 2220.0;
+		public static double bRampVerticalPosition = 1024.0;
+		public static double fRampDownPosition = 1536.0;
 		
 		//MOTOR SPEEDS
 		public static double rightMotorOutput = -0.5;
@@ -44,6 +47,8 @@ public class RobotConstants {
 		public static int startPosButton = 6;
 		public static int intakeCubeButton = 7;
 		public static int outtakeCubeButton = 9;
-		public static int driveTrainButton = 1;
+		public static int bFRampDownButton = 1;
+		public static int bRampVerticalButton = 2;
 		public static int switchControlMode = 11;
+		public static int switchCubeState = 10;
 }

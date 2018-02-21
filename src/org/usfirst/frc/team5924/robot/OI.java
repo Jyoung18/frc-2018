@@ -83,6 +83,22 @@ public class OI {
 		
 	}
 	
+	public boolean toggleCubeState(){
+		
+		return buttonPanel.getRawButtonPressed(RobotConstants.switchCubeState);
+	}
+	
+	public boolean getBFRampDownButton(){
+		
+		return buttonPanel.getRawButton(RobotConstants.bFRampDownButton);
+		
+	}
+	
+	public boolean getBRampVerticalButton(){
+		
+		return buttonPanel.getRawButton(RobotConstants.bRampVerticalButton);
+		
+	}
 	public boolean toggleControlMode(){
 		
 		return buttonPanel.getRawButtonPressed(RobotConstants.switchControlMode);

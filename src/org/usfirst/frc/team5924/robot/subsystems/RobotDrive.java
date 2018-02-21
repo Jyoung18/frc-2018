@@ -6,7 +6,6 @@ import org.usfirst.frc.team5924.robot.commands.DriveCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -50,7 +49,7 @@ public class RobotDrive extends Subsystem {
 	//TELE STUFF
 	public void driveRobotBase(){
 		
-		rDrive.arcadeDrive(Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());	
+		rDrive.arcadeDrive(Robot.oi.getXboxYAxis() *-1, Robot.oi.getXboxXAxis());	
 
 	}
 	
@@ -62,7 +61,71 @@ public class RobotDrive extends Subsystem {
 		
 	}	
 	
-	public void checkAutoDrive(String gameDataReq){
+	public void checkCenterAutoDrive(String gameDataReq){
+
+		if(gameDataReq.length() > 0){
+			
+			if(gameDataReq.charAt(0) == 'L'){
+				
+				//leftAutoCode
+				if(timer.get() < 10){
+					
+					rDrive.arcadeDrive(0.5, 0);
+					
+				} else if(timer.get() < 15 && timer.get() > 10){
+					
+					rDrive.arcadeDrive(0, 0.25);
+				}
+				
+			} else{
+				
+				//rightAutoCode
+				if(timer.get() < 10){
+					
+					rDrive.arcadeDrive(0.5, 0);
+					
+				} else if(timer.get() < 15 && timer.get() > 10){
+					
+					rDrive.arcadeDrive(0, 0.75);
+					
+				}
+			}
+		}
+	}
+	
+	public void checkRightAutoDrive(String gameDataReq){
+
+		if(gameDataReq.length() > 0){
+			
+			if(gameDataReq.charAt(0) == 'L'){
+				
+				//leftAutoCode
+				if(timer.get() < 10){
+					
+					rDrive.arcadeDrive(0.5, 0);
+					
+				} else if(timer.get() < 15 && timer.get() > 10){
+					
+					rDrive.arcadeDrive(0, 0.25);
+				}
+				
+			} else{
+				
+				//rightAutoCode
+				if(timer.get() < 10){
+					
+					rDrive.arcadeDrive(0.5, 0);
+					
+				} else if(timer.get() < 15 && timer.get() > 10){
+					
+					rDrive.arcadeDrive(0, 0.75);
+					
+				}
+			}
+		}
+	}
+	
+	public void checkLeftAutoDrive(String gameDataReq){
 
 		if(gameDataReq.length() > 0){
 			

@@ -9,11 +9,6 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5924.robot.Robot;
-import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * An example command.  You can replace me with your own command.

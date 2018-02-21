@@ -20,15 +20,15 @@ public class RightDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
+    	Robot.kRobotDrive.driveTimer();
     	gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	Robot.kRobotDrive.checkAutoDrive(gameData);
+    	Robot.kRobotDrive.printMotorVoltage();
+    	Robot.kRobotDrive.checkRightAutoDrive(gameData);
     	
     }
 

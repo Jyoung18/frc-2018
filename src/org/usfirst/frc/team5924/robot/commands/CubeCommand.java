@@ -12,7 +12,7 @@ public class CubeCommand extends Command {
     public CubeCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.kCubeManipulator);
+    	//requires(Robot.kCubeManipulator);
     }
 
     // Called just before this Command runs the first time
@@ -23,6 +23,7 @@ public class CubeCommand extends Command {
     protected void execute() {
     	
     	/**
+    	Robot.kCubeManipulator.printCubeManipulatorStatus();
 		// CUBE MANIPULATOR
 		if(Robot.oi.getIntakeButton()){
 			Robot.kCubeManipulator.intakeCube();
@@ -31,6 +32,8 @@ public class CubeCommand extends Command {
 			Robot.kCubeManipulator.outtakeCube();
 			
 		}
+		
+		if(Robot.oi.get
 		**/
     	
     }
