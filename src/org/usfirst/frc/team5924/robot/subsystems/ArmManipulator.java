@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
-	private double positionTarget = 390.0;
+	private double positionTarget = 100.0;
 	private double autoPosTarget = 310.0;
 	private int buttonToggle = 0;
 	private String actuatorPosition = "Start Position";

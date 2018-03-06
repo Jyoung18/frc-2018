@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5924.robot;
 
+import org.usfirst.frc.team5924.robot.commands.AutoDriveCommand;
 import org.usfirst.frc.team5924.robot.commands.CenterAutoCommand;
 import org.usfirst.frc.team5924.robot.commands.LeftAutoCommand;
 import org.usfirst.frc.team5924.robot.commands.RightAutoCommand;
@@ -15,6 +16,8 @@ import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RampManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,7 +33,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 	public static final ArmManipulator kArmManipulator = new ArmManipulator();
-	public static final RobotDrive kRobotDrive = new RobotDrive();
+	//public static final RobotDrive kRobotDrive = new RobotDrive();
 	//public static final CubeManipulator kCubeManipulator = new CubeManipulator();
 	//public static final RampManipulator kRampManipulator = new RampManipulator();
 	public static OI oi = new OI();
@@ -44,17 +47,15 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-	
 		m_chooser.addDefault("Center Auto", new CenterAutoCommand());
 		m_chooser.addObject("Right Auto", new RightAutoCommand());
 		m_chooser.addObject("Left Auto", new LeftAutoCommand());
+		m_chooser.addObject("Test Auto", new AutoDriveCommand("c"));
 		SmartDashboard.putData("Auto mode", m_chooser);
-		//autonomousCommand = new AutoCommand();
 		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
 		//UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();
 		//rampCam.setResolution(640, 480);
 		//armCam.setResolution(640, 480);
-		
 	}
 
 	/**
@@ -86,13 +87,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_selectedCommand = m_chooser.getSelected();
-		
-		/**String autoSelected = SmartDashboard.getString("Auto Selector",
-		"Default"); switch(autoSelected) { case "My Auto": selectedCommand
-		= new TeleCommand(); break; case "Default Auto": default:
-		selectedCommand = new AutoCommand(); break; }
-		
-		**/
 		// schedule the autonomous command (example)
 		if (m_selectedCommand != null) {
 			m_selectedCommand.start();
@@ -105,44 +99,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
-		/**double maxSpeed = (4455 * 6 * Math.PI) / (60 * 10.75 * 12);
-		// ENTER STARTING POSITION (left, right, or middle)
-		String startingPosition = null;
-		
-		if (startingPosition == "left") {
-			// go forward
-			// turn right
-		}
-		
-		else if (startingPosition == "right") {
-			// go forward
-			// turn left
-		}
-		
-		else if (startingPosition == "middle") {
-			// go forward
-		}
-		while (timer.get() < 1.65) {
-			RobotDrive.rDrive.arcadeDrive(0.8, 0.0);
-			
-		}
-		//Turn 90 degr2ees to the right
-		while (timer.get() > 1.15 && timer.get() < 2.15)
-		
-		{
-			RobotDrive.rDrive.arcadeDrive(0.0, 0.5);
-		}
-		
-		
-		while (timer.get() > 1.65 && timer.get() < 2.65)
-			
-		{
-			RobotDrive.rDrive.arcadeDrive(0.6, 0);
-		} **/
-		
-		
-		
 	}
 
 	@Override
@@ -153,12 +109,7 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_selectedCommand != null) {
 			m_selectedCommand.cancel();
-			
-		}
-			
-		//teleCommand.start();
-			
-		
+		}			
 	}
 
 	/**

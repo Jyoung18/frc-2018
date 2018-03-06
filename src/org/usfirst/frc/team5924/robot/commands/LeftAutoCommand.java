@@ -12,8 +12,10 @@ public class LeftAutoCommand extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addParallel(new LeftDriveCommand());
+    	String autoType = "L";
+    	addParallel(new AutoDriveCommand(autoType));
     	addParallel(new ArmAutoCommand());
+    	addParallel(new CubeCommand());
 
         // To run multiple commands at the same time,
         // use addParallel()

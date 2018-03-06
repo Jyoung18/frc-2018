@@ -26,24 +26,9 @@ public class RampManipulator extends Subsystem {
 	private double fRampPosition;
 	
 	public RampManipulator(){
-		bRampTalonRight.config_kF(0, 0.0, 10);
-		bRampTalonRight.config_kP(0, 0.07, 10);//1.25
-		bRampTalonRight.config_kI(0, 0.00008, 10);
-		bRampTalonRight.config_kD(0, 0, 10);
-		bRampTalonRight.configForwardSoftLimitThreshold(2220, 0);
-		bRampTalonRight.configForwardSoftLimitEnable(true, 0);
-		bRampTalonRight.configReverseSoftLimitThreshold(1024, 0);
-		bRampTalonRight.configReverseSoftLimitEnable(true, 0);
 		
-		fRampTalonRight.config_kF(0, 0.0, 10);
-		fRampTalonRight.config_kP(0, 0.07, 10);//1.25
-		fRampTalonRight.config_kI(0, 0.00008, 10);
-		fRampTalonRight.config_kD(0, 0, 10);
-		fRampTalonRight.configForwardSoftLimitThreshold(1536, 0);
-		fRampTalonRight.configForwardSoftLimitEnable(true, 0);
-		fRampTalonRight.configReverseSoftLimitThreshold(0, 0);
-		fRampTalonRight.configReverseSoftLimitEnable(true, 0);
-		
+		//FIX THIS
+	
 		bRampTalonLeft.follow(bRampTalonRight);
 		
 		fRampTalonLeft.follow(fRampTalonRight);
@@ -70,7 +55,6 @@ public class RampManipulator extends Subsystem {
 	public void printSelectedSensorPos(){
 		
 		System.out.println(bRampTalonRight.getSelectedSensorPosition(0));
-		
 	}
 	
 	public void setBackRampVerticalPosition(){
@@ -104,4 +88,3 @@ public class RampManipulator extends Subsystem {
     
     
 }
-

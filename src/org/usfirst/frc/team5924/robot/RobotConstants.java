@@ -1,22 +1,20 @@
 package org.usfirst.frc.team5924.robot;
 
 public class RobotConstants {
-	// MOTOR CONTROLLER ID
-		public static int cFrontRight = 7; //7
-		public static int cRearRight = 6; //6
-		public static int cRearLeft = 1; //1
-		public static int cFrontLeft = 11; //11
-		public static int cActuator = 5; //5
-		public static int cCubeRight = 6;
-		public static int cCubeLeft = 7;
+	
+		// MOTOR CONTROLLER ID
+		public static int cFrontRight = 1; 
+		public static int cRearRight = 2;
+		public static int cRearLeft = 4; 
+		public static int cFrontLeft = 5; 
+		public static int cActuator = 3; 
+		public static int cCubeRight = 1;
+		public static int cCubeLeft = 2;
 		public static int cBackRampMotorRight = 8;
 		public static int cBackRampMotorLeft = 9;
 		public static int cFrontRampMotorRight = 10;
 		public static int cFrontRampMotorLeft = 11;
-		
-		//PNEUMATIC ID
-		//public static int compressor = ;
-		
+
 		//JOYSTICK ID
 		public static int cXboxJoy = 1;
 		public static int cButtonPanel = 2;

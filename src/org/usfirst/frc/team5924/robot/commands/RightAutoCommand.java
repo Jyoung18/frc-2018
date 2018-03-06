@@ -12,7 +12,8 @@ public class RightAutoCommand extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addParallel(new RightDriveCommand());
+    	String autoType = "R";
+    	addParallel(new AutoDriveCommand(autoType));
     	addParallel(new ArmAutoCommand());
 
         // To run multiple commands at the same time,

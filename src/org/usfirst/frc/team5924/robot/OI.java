@@ -72,14 +72,14 @@ public class OI {
 	public boolean getIntakeButton(){
 		
 		
-		return buttonPanel.getRawButton(RobotConstants.intakeCubeButton);
+		return buttonPanel.getRawButtonPressed(RobotConstants.intakeCubeButton);
 		
 	}
 	
 	public boolean getOuttakeButton(){
 		
 		
-		return buttonPanel.getRawButton(RobotConstants.outtakeCubeButton);
+		return buttonPanel.getRawButtonPressed(RobotConstants.outtakeCubeButton);
 		
 	}
 	

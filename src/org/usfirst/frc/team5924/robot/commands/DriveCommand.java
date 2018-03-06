@@ -9,6 +9,7 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5924.robot.Robot;
+import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 
 /**
  * An example command.  You can replace me with your own command.
@@ -16,14 +17,12 @@ import org.usfirst.frc.team5924.robot.Robot;
 public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.kRobotDrive);
+		//requires(Robot.kRobotDrive);
 		
 	}
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		
-		//Robot.kEncoderTesting.selectSensor();
 		
 	}
 
@@ -31,8 +30,9 @@ public class DriveCommand extends Command {
 	@Override
 	protected void execute() {
 		
-		Robot.kRobotDrive.driveRobotBase();
-		Robot.kRobotDrive.printMotorVoltage();
+		//Robot.kRobotDrive.driveRobotBase();
+		//System.out.println(RobotDrive.rightEncoder.getDistance() + " " + RobotDrive.leftEncoder.getDistance());
+		//Robot.kRobotDrive.printMotorVoltage();
 		
 	}
 
