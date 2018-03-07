@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
-	private double positionTarget = 100.0;
+	private double positionTarget = 390.0;
 	private double autoPosTarget = 310.0;
 	private int buttonToggle = 0;
 	private String actuatorPosition = "Start Position";
@@ -35,7 +35,7 @@ public class ArmManipulator extends Subsystem{
     // here. Call these from Commands.
 	
 	public ArmManipulator(){
-		
+		/*
 		actuatorTalon.config_kF(0, 0.0, 10);
 		actuatorTalon.config_kP(0, 25.25, 10); //25.25
 		actuatorTalon.config_kI(0, 0.00015, 10); //.00015
@@ -44,12 +44,13 @@ public class ArmManipulator extends Subsystem{
 		actuatorTalon.configForwardSoftLimitEnable(true, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
 		actuatorTalon.configReverseSoftLimitEnable(true, 0);
+		*/
 	}
 	//SELECT FEEDBACK SENSOR
 	public void selectSensor(){
 		
 		//Pot
-		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
+		//actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
 	}
@@ -123,12 +124,12 @@ public class ArmManipulator extends Subsystem{
     	}
     	
     	if((buttonToggle % 2) == 0){
-    		setPosition();
-    		SmartDashboard.putString("Control Mode", "Position");
-    		
-    	} else {
     		setRawPosition();
     		SmartDashboard.putString("Control Mode", "Voltage");
+    		
+    	} else {
+    		setPosition();
+    		SmartDashboard.putString("Control Mode", "Position");
     	}
     	
     }

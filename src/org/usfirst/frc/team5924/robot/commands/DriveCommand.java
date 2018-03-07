@@ -17,7 +17,7 @@ import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		//requires(Robot.kRobotDrive);
+		requires(Robot.kRobotDrive);
 		
 	}
 	// Called just before this Command runs the first time
@@ -30,8 +30,8 @@ public class DriveCommand extends Command {
 	@Override
 	protected void execute() {
 		
-		//Robot.kRobotDrive.driveRobotBase();
-		//System.out.println(RobotDrive.rightEncoder.getDistance() + " " + RobotDrive.leftEncoder.getDistance());
+		Robot.kRobotDrive.driveRobotBase();
+		System.out.println(Robot.kRobotDrive.rightEncoder.getDistance() + " " + Robot.kRobotDrive.leftEncoder.getDistance());
 		//Robot.kRobotDrive.printMotorVoltage();
 		
 	}

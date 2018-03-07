@@ -17,6 +17,7 @@ import org.usfirst.frc.team5924.robot.subsystems.RampManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,10 +33,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ArmManipulator kArmManipulator = new ArmManipulator();
-	//public static final RobotDrive kRobotDrive = new RobotDrive();
+	//public static final ArmManipulator kArmManipulator = new ArmManipulator();
+	public static final RobotDrive kRobotDrive = new RobotDrive();
 	//public static final CubeManipulator kCubeManipulator = new CubeManipulator();
 	//public static final RampManipulator kRampManipulator = new RampManipulator();
+	public static final AnalogGyro gyro = new AnalogGyro(0, 0, 0.0);
 	public static OI oi = new OI();
 	
 	Command m_selectedCommand;
@@ -46,11 +48,10 @@ public class Robot extends TimedRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
+	public void robotInit() {	
 		m_chooser.addDefault("Center Auto", new CenterAutoCommand());
 		m_chooser.addObject("Right Auto", new RightAutoCommand());
 		m_chooser.addObject("Left Auto", new LeftAutoCommand());
-		m_chooser.addObject("Test Auto", new AutoDriveCommand("c"));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
 		//UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();

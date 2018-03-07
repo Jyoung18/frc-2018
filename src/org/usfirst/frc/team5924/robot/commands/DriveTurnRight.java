@@ -2,54 +2,34 @@ package org.usfirst.frc.team5924.robot.commands;
 
 import org.usfirst.frc.team5924.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ArmCommand extends Command {
-
-    public ArmCommand() {
+public class DriveTurnRight extends Command {
+	
+    public DriveTurnRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.kArmManipulator);
-    	
+    	requires(Robot.kRobotDrive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.kArmManipulator.selectSensor();
-    
+    	Robot.kRobotDrive.startTimer();
+ 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	/*Robot.kArmManipulator.checkButtonToggle();
-    	Robot.kArmManipulator.printSensorPosition();
-    	Robot.kArmManipulator.printMotorVoltage();
-    	Robot.kArmManipulator.printSelectedPosition();
-		
-		if(Robot.oi.getGroundPosButton()){
-			Robot.kArmManipulator.setGroundPosition();
-			
-		} else if(Robot.oi.getExchangePosButton()){
-			Robot.kArmManipulator.setExchangePosition();
-			
-		} else if(Robot.oi.getSwitchPosButton()){
-			Robot.kArmManipulator.setSwitchPosition();
-			
-		} else if(Robot.oi.getStartPosButton()){
-			Robot.kArmManipulator.setStartPosition();
-			
-		}
-		*/
-    	
+    	Robot.kRobotDrive.rDrive.arcadeDrive(0, 0.6);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.kRobotDrive.checkturnRight();
     }
 
     // Called once after isFinished returns true

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5924.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -7,14 +8,72 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class CenterAutoCommand extends CommandGroup {
 
+	String gameData;
+	
     public CenterAutoCommand() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	String autoType = "C";
-    	addParallel(new AutoDriveCommand(autoType));
-    	addParallel(new ArmAutoCommand());
+    	gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	
+    	if(gameData.length() > 0){
+    		
+			if(gameData.charAt(0) == 'L'){ 
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new CubeCommand());
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addParallel(new AutoDriveCommand(15.0));
+				addParallel(new ArmAutoCommand());
+				addSequential(new CubeCommand());
+				addParallel(new AutoDriveCommand(15.0));
+				addParallel(new ArmAutoCommand());
+				addParallel(new AutoDriveCommand(15.0));
+				addSequential(new CubeCommand());
+				
+				
+/*
+RobotDrive-- 5
+Cube-- 1
+{RobotDrive--3
+Arm- 1}
+Cube- 1
+{Arm- 1
+RobotDrive- 2}
+Cube- 1
+*/
+
+
+
+				
+				
+				
+				
+			} else{
+				
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new CubeCommand());
+				addSequential(new AutoDriveCommand(15.0));
+				addSequential(new AutoDriveCommand(15.0));
+				addParallel(new AutoDriveCommand(15.0));
+				addParallel(new ArmAutoCommand());
+				addSequential(new CubeCommand());
+				addParallel(new AutoDriveCommand(15.0));
+				addParallel(new ArmAutoCommand());
+				addParallel(new AutoDriveCommand(15.0));
+				addSequential(new CubeCommand());
+				
+			}
+    	}
 
         // To run multiple commands at the same time,
         // use addParallel()

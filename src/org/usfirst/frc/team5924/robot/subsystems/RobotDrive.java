@@ -31,16 +31,14 @@ public class RobotDrive extends Subsystem {
 	private static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRight, rearRight);
 	private static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 	
-	private static DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
+	public DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
 	
 	private static Timer timer = new Timer();
 	
-	public static Encoder rightEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
-	public static Encoder leftEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+	public Encoder rightEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+	public Encoder leftEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
 	
 	private static double distancePerPulse = 4 * (6.0 * Math.PI) / 1440.0;
-	private int autoCounter = 0;
-	private boolean resetPosition = true;
 	
 	public RobotDrive(){
 		//pulses per revolution: 1440
@@ -68,13 +66,6 @@ public class RobotDrive extends Subsystem {
 	}
 	
 	//AUTO STUFF
-	public void driveTimer(){
-		
-		timer.reset();
-		timer.start();
-		
-	}	
-	
 	public void checkAutoDrive(String gameDataReq, String autoTypeDriveReq){
 		/**
 		if(gameDataReq.length() > 0){
@@ -271,29 +262,25 @@ public class RobotDrive extends Subsystem {
 		}**/
 	}
 	
-	public boolean autoDriveFinish(){
+	public boolean autoDriveFinish(double inchesReq){
 		
-		if(timer.get() > 15){
+		if (Robot.kRobotDrive.getAverageEncoderPosition() >= inchesReq){
 			return true;
 		}
+		
 		return false;
 			
 	}
 	
-	public void moveRobot(double inches) {
-		if(resetPosition){
-			resetEncoders();
-			resetPosition = false;
-		}
-		if(leftEncoder.getDistance() != inches){
-			rDrive.arcadeDrive(0.3, 0);
-			
-		} else if (leftEncoder.getDistance() == inches){
-			rDrive.arcadeDrive(0, 0);
-			autoCounter++;
-			resetPosition = true;
-			
-		}
+	public void printBothEncoders(){
+		
+		System.out.println(leftEncoder.getDistance() + " " + rightEncoder.getDistance());
+	}
+	
+	public void moveRobot(){
+		
+		rDrive.arcadeDrive(-0.6, 0);
+	
 	}
 	
 	public double getAverageEncoderPosition() {
@@ -307,39 +294,31 @@ public class RobotDrive extends Subsystem {
 	
 	public void autoTestDrive(){
 		
-		rDrive.arcadeDrive(0, 0.5);
+		rDrive.arcadeDrive(0, -0.5);
 	}
 		
-	public void gBoxTest(){
-		frontLeft.set(Robot.oi.getButtonPanelAxis() * 0.25);
-		rearLeft.set(Robot.oi.getButtonPanelAxis() * -0.25);
-	}
-	
-	public void genericForward() {
-    	rearLeft.follow(frontLeft);
-    	rearRight.follow(frontRight);
-    	frontLeft.set(ControlMode.Position, 137625.6);
-    	frontRight.set(ControlMode.Position, -137625.6);
-    }
-	
-	public void turnLeft() {
+	public void startTimer(){
+		
 		timer.reset();
 		timer.start();
-		while (timer.get() < 1)
-			
+	}
+	
+	public void turnLeft() {
+		
+		timer.reset();
+		timer.start();
+		while (timer.get() < 1)		
 		{
 			rDrive.arcadeDrive(0.0, -0.5);
 		} 
 	}
 	
-	public void turnRight() {
-		timer.reset();
-		timer.start();
-		while (timer.get() < 1)
-		
-		{
-			rDrive.arcadeDrive(0.0, 0.5);
+	public boolean checkturnRight() {
+		if(timer.get() > .675){
+			timer.reset();
+			return true;
 		}
+		return false;
 	}
 	
     public void initDefaultCommand() {
