@@ -35,22 +35,22 @@ public class ArmManipulator extends Subsystem{
     // here. Call these from Commands.
 	
 	public ArmManipulator(){
-		/*
+		
 		actuatorTalon.config_kF(0, 0.0, 10);
 		actuatorTalon.config_kP(0, 25.25, 10); //25.25
 		actuatorTalon.config_kI(0, 0.00015, 10); //.00015
 		actuatorTalon.config_kD(0, 0.0, 10);
 		actuatorTalon.configForwardSoftLimitThreshold(450, 0);
-		actuatorTalon.configForwardSoftLimitEnable(true, 0);
+		actuatorTalon.configForwardSoftLimitEnable(false, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
-		actuatorTalon.configReverseSoftLimitEnable(true, 0);
-		*/
+		actuatorTalon.configReverseSoftLimitEnable(false, 0);
+		
 	}
 	//SELECT FEEDBACK SENSOR
 	public void selectSensor(){
 		
 		//Pot
-		//actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
+		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
 		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
 	}
@@ -81,7 +81,6 @@ public class ArmManipulator extends Subsystem{
    
     public void setGroundPosition(){
     	
-    	//actuatorTalon.set(ControlMode.Position, RobotConstants.groundPosition);
     	positionTarget = RobotConstants.groundPosition;
     	actuatorPosition = "Ground Position";
     	
@@ -89,7 +88,6 @@ public class ArmManipulator extends Subsystem{
     
     public void setExchangePosition(){
     	
-    	//actuatorTalon.set(ControlMode.Position, RobotConstants.exchangePosition);
     	positionTarget = RobotConstants.exchangePosition;
     	actuatorPosition = "Exchange Position";
     	
@@ -97,7 +95,6 @@ public class ArmManipulator extends Subsystem{
     
     public void setSwitchPosition(){
     	
-    	//actuatorTalon.set(ControlMode.Position, RobotConstants.switchPosition);
     	positionTarget = RobotConstants.switchPosition;
     	actuatorPosition = "Switch Position";
     	
@@ -105,7 +102,6 @@ public class ArmManipulator extends Subsystem{
     
     public void setStartPosition(){
     	
-    	//actuatorTalon.set(ControlMode.Position, RobotConstants.startPosition);
     	positionTarget = RobotConstants.startPosition;
     	actuatorPosition = "Start Position";
     	

@@ -12,20 +12,20 @@ public class ArmCommand extends Command {
     public ArmCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.kArmManipulator);
+    	requires(Robot.kArmManipulator);
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.kArmManipulator.selectSensor();
+    	Robot.kArmManipulator.selectSensor();
     
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	/*Robot.kArmManipulator.checkButtonToggle();
+    	Robot.kArmManipulator.checkButtonToggle();
     	Robot.kArmManipulator.printSensorPosition();
     	Robot.kArmManipulator.printMotorVoltage();
     	Robot.kArmManipulator.printSelectedPosition();
@@ -43,7 +43,8 @@ public class ArmCommand extends Command {
 			Robot.kArmManipulator.setStartPosition();
 			
 		}
-		*/
+		
+		
     	
     }
 

@@ -8,17 +8,18 @@
 package org.usfirst.frc.team5924.robot;
 
 import org.usfirst.frc.team5924.robot.commands.AutoDriveCommand;
-import org.usfirst.frc.team5924.robot.commands.CenterAutoCommand;
-import org.usfirst.frc.team5924.robot.commands.LeftAutoCommand;
-import org.usfirst.frc.team5924.robot.commands.RightAutoCommand;
+import org.usfirst.frc.team5924.robot.commands.AutoCommand;
 import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RampManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -33,15 +34,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	//public static final ArmManipulator kArmManipulator = new ArmManipulator();
+	public static final ArmManipulator kArmManipulator = new ArmManipulator();
 	public static final RobotDrive kRobotDrive = new RobotDrive();
-	//public static final CubeManipulator kCubeManipulator = new CubeManipulator();
+	public static final CubeManipulator kCubeManipulator = new CubeManipulator();
 	//public static final RampManipulator kRampManipulator = new RampManipulator();
-	public static final AnalogGyro gyro = new AnalogGyro(0, 0, 0.0);
 	public static OI oi = new OI();
+	public static final ADIS16448_IMU imu = new ADIS16448_IMU();
 	
-	Command m_selectedCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	String selectedString;
+	String gameData;
+	Command autoCommand;
+	SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -49,10 +52,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {	
-		m_chooser.addDefault("Center Auto", new CenterAutoCommand());
-		m_chooser.addObject("Right Auto", new RightAutoCommand());
-		m_chooser.addObject("Left Auto", new LeftAutoCommand());
+		m_chooser.addDefault("Center Auto", "C");
+		m_chooser.addObject("Right Auto", "R");
+		m_chooser.addObject("Left Auto", "L");
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		imu.calibrate();
+		
+		
 		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
 		//UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();
 		//rampCam.setResolution(640, 480);
@@ -87,10 +94,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_selectedCommand = m_chooser.getSelected();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		selectedString = m_chooser.getSelected();
+		autoCommand = new AutoCommand(selectedString, gameData);
 		// schedule the autonomous command (example)
-		if (m_selectedCommand != null) {
-			m_selectedCommand.start();
+		if (autoCommand != null) {
+			autoCommand.start();
 		}
 	}
 
@@ -108,8 +117,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_selectedCommand != null) {
-			m_selectedCommand.cancel();
+		if (autoCommand != null) {
+			autoCommand.cancel();
 		}			
 	}
 

@@ -47,7 +47,7 @@ public class CubeManipulator extends Subsystem {
 		
 		leftMotor.set(-cubeMotorSpeed);
 		rightMotor.set(cubeMotorSpeed);
-		if(intakeTimer.get() > 2.5 && leftMotor.getMotorOutputVoltage() > -2 && rightMotor.getMotorOutputVoltage() < 2){
+		if(intakeTimer.get() > 1.5 && leftMotor.getMotorOutputVoltage() < 5.3 && rightMotor.getMotorOutputVoltage() > -5.3){
 			
 			cubeMotorSpeed = 0;
 			

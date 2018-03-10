@@ -3,11 +3,13 @@ package org.usfirst.frc.team5924.robot.subsystems;
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
 import org.usfirst.frc.team5924.robot.commands.DriveCommand;
+import org.usfirst.frc.team5924.robot.commands.DriveTurnCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Timer;
@@ -65,202 +67,6 @@ public class RobotDrive extends Subsystem {
 
 	}
 	
-	//AUTO STUFF
-	public void checkAutoDrive(String gameDataReq, String autoTypeDriveReq){
-		/**
-		if(gameDataReq.length() > 0){
-			
-			if(autoTypeDriveReq == "C"){ //CHECK CENTER AUTODRIVE
-				
-				if(gameDataReq.charAt(0) == 'L'){ 
-				
-					//leftAutoCode
-					//PRIMARY OPTION
-
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//Deposit Cube
-					moveRobot(); //reverse
-					turnRight();
-					moveRobot(); //forward
-					//pick up cube
-					moveRobot(); //reverse
-					turnLeft();
-					//deposit cube
-
-
-					
-				
-				
-		
-					//SECONDARY OPTION
-					moveRobot(94.0);
-					//pick up cube
-					turnLeft();
-					moveRobot(122.0);
-					turnRight();
-					moveRobot(98);
-					turnRight();
-					//move forward ?
-					//deposit cube
-					turnLeft();
-					//moveForward();
-					turnRight();
-					//moveForward();
-					//pick up cube
-					turnRight();
-					//moveForward();
-					turnLeft();
-					//deposit cube
-				
-					} else{
-				
-						//rightAutoCode
-						//PRIMARY OPTION
-
-						moveRobot(); //forward
-						turnRight();
-						moveRobot(); //forward
-						turnLeft();
-						moveRobot(); //forward
-						//Deposit Cube
-						moveRobot(); //reverse
-						turnLeft();
-						moveRobot(); //forward
-						//pick up cube
-						moveRobot(); //reverse
-						turnRight();
-						//deposit cube
-
-
-				
-						//SECONDARY OPTION
-						moveRobot(94.0);
-						turnRight();
-						moveRobot(122.0);
-						turnLeft();
-						moveRobot(98);
-						turnLeft();
-				
-					}
-			} else if(autoTypeDriveReq == "L"){ //CHECK LEFT AUTODRIVE
-				
-				if(gameDataReq.charAt(0) == 'L'){
-					
-					//leftAutoCode
-					//PRIMARY OPTION
-
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//deposit cube
-					moveRobot(); //reverse
-					turnRight();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					//pick up cube
-					moveRobot(); //reverse
-					turnLeft();
-					//deposit cube
-
-
-					
-					
-					
-				} else{
-					
-					//rightAutoCode
-
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//deposit cube
-					moveRobot(); //reverse
-					turnLeft();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					//pick up cube
-					moveRobot(); //reverse
-					turnLeft();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//deposit cube
-
-
-					
-				}
-				
-			} else if(autoTypeDriveReq == "R"){ //CHECK RIGHT AUTODRIVE
-				
-				if(gameDataReq.charAt(0) == 'L'){
-					
-					//leftAutoCode
-					//PRIMARY OPTION
-
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					//deposit cube
-					moveRobot(); //reverse
-					turnRight();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//pick up cube
-					moveRobot(); //reverse
-					turnRight();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					//deposit cube
-
-					
-				} else{
-					
-					//rightAutoCode
-					//PRIMARY OPTION
-
-					moveRobot(); //forward
-					turnLeft();
-					moveRobot(); //forward
-					//deposit cube
-					moveRobot(); //reverse
-					turnLeft();
-					moveRobot(); //forward
-					turnRight();
-					moveRobot(); //forward
-					//pick up cube
-					moveRobot(); //reverse
-					turnRight();
-					//deposit cube
-
-
-				}
-			} 
-		}**/
-	}
 	
 	public boolean autoDriveFinish(double inchesReq){
 		
@@ -307,10 +113,18 @@ public class RobotDrive extends Subsystem {
 		
 		timer.reset();
 		timer.start();
-		while (timer.get() < 1)		
+		while (timer.get() < 1.3)		
 		{
 			rDrive.arcadeDrive(0.0, -0.5);
-		} 
+		}
+		/*gyro.reset();
+		//while doesn't work
+		//if doesn't print
+		if (gyro.getAngle() <= 90) {
+			rDrive.arcadeDrive(0.0, -0.5);
+			System.out.println(RobotDrive.gyro.getAngle());
+		}
+		*/
 	}
 	
 	public boolean checkturnRight() {

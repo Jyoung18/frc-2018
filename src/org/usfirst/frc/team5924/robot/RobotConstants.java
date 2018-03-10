@@ -5,11 +5,11 @@ public class RobotConstants {
 		// MOTOR CONTROLLER ID
 		public static int cFrontRight = 1; 
 		public static int cRearRight = 2;
-		public static int cRearLeft = 4; 
-		public static int cFrontLeft = 5; 
-		public static int cActuator = 3; 
-		public static int cCubeRight = 1;
-		public static int cCubeLeft = 2;
+		public static int cRearLeft = 8; 
+		public static int cFrontLeft = 9; 
+		public static int cActuator = 3;
+		public static int cCubeRight = 4;
+		public static int cCubeLeft = 7;
 		public static int cBackRampMotorRight = 8;
 		public static int cBackRampMotorLeft = 9;
 		public static int cFrontRampMotorRight = 10;
