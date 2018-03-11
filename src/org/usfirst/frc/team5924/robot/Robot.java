@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team5924.robot;
 
-import org.usfirst.frc.team5924.robot.commands.AutoDriveCommand;
 import org.usfirst.frc.team5924.robot.commands.AutoCommand;
 import org.usfirst.frc.team5924.robot.subsystems.ArmManipulator;
 import org.usfirst.frc.team5924.robot.subsystems.CubeManipulator;
@@ -17,7 +16,6 @@ import org.usfirst.frc.team5924.robot.subsystems.RobotDrive;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -59,7 +57,6 @@ public class Robot extends TimedRobot {
 		
 		imu.calibrate();
 		
-		
 		//UsbCamera rampCam = CameraServer.getInstance().startAutomaticCapture();
 		//UsbCamera armCam = CameraServer.getInstance().startAutomaticCapture();
 		//rampCam.setResolution(640, 480);
@@ -73,7 +70,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override

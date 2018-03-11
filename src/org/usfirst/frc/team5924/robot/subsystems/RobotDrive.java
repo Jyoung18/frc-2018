@@ -3,16 +3,10 @@ package org.usfirst.frc.team5924.robot.subsystems;
 import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
 import org.usfirst.frc.team5924.robot.commands.DriveCommand;
-import org.usfirst.frc.team5924.robot.commands.DriveTurnCommand;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,39 +28,84 @@ public class RobotDrive extends Subsystem {
 	private static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeft, rearLeft);
 	
 	public DifferentialDrive rDrive = new DifferentialDrive(rightSide, leftSide);
-	
-	private static Timer timer = new Timer();
-	
+
 	public Encoder rightEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
 	public Encoder leftEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
-	
 	private static double distancePerPulse = 4 * (6.0 * Math.PI) / 1440.0;
+	
+	private String turnStatus = "";
+	private double angleError;
+	private double angle;
+	private double errorFactor = 0.0118;
+	private double targetAngle = 90;
+	
 	
 	public RobotDrive(){
 		//pulses per revolution: 1440
 		//E4T MINI optical encoder
 		rightEncoder.setDistancePerPulse(distancePerPulse);
-		leftEncoder.setDistancePerPulse(distancePerPulse);
-		
+		leftEncoder.setDistancePerPulse(distancePerPulse);	
 	}
 	
-	public void printMotorVoltage(){
+	public void printMotorInfo(){
 		
 		SmartDashboard.putNumber("Front Right Motor Voltage", frontRight.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Rear Right Motor Voltage", rearRight.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Front Left Motor Voltage", frontLeft.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Rear Left Motor Voltage", rearLeft.getMotorOutputVoltage());
+	}
+	
+	public void printAutoMotorInfo(){
 		
+		SmartDashboard.putNumber("Left Encoder Position", leftEncoder.getDistance());
+		SmartDashboard.putNumber("Right Encoder Position", rightEncoder.getDistance());
+		SmartDashboard.putNumber("Z-Axis Angle", Robot.imu.getAngleZ());
+    	SmartDashboard.putString("Robot Turn Status", turnStatus);
 	}
 	
 	
 	//TELE STUFF
 	public void driveRobotBase(){
 		
-		rDrive.arcadeDrive(Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());	
-
+		rDrive.arcadeDrive(-Robot.oi.getXboxYAxis(), Robot.oi.getXboxXAxis());	
 	}
 	
+	public void moveRobot(){
+		
+		rDrive.arcadeDrive(0.6, 0);
+	}
+	
+	public void turnRobot(String turnTypeReq){
+		angle = Robot.imu.getAngleZ();
+		angleError = targetAngle - angle;
+		
+		if(turnTypeReq == "R"){
+	    	if(Robot.imu.getAngleZ() < targetAngle){
+	    		
+	    		Robot.kRobotDrive.rDrive.arcadeDrive(0, angleError * errorFactor);
+	    		turnStatus = "Turning Right";
+	    	}
+	    
+		} else if(turnTypeReq == "L"){
+			
+			if(Robot.imu.getAngleZ() > -targetAngle){
+	    		
+	    		Robot.kRobotDrive.rDrive.arcadeDrive(0, -angleError * errorFactor);
+	    		turnStatus = "Turning Left";
+	    	}
+		}
+	}
+	
+	public double getAverageEncoderPosition() {
+		
+		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+	}
+	
+	public void resetEncoders() {
+		
+		rightEncoder.reset();
+		leftEncoder.reset();
+	}
 	
 	public boolean autoDriveFinish(double inchesReq){
 		
@@ -75,63 +114,14 @@ public class RobotDrive extends Subsystem {
 		}
 		
 		return false;
-			
 	}
 	
-	public void printBothEncoders(){
-		
-		System.out.println(leftEncoder.getDistance() + " " + rightEncoder.getDistance());
-	}
-	
-	public void moveRobot(){
-		
-		rDrive.arcadeDrive(-0.6, 0);
-	
-	}
-	
-	public double getAverageEncoderPosition() {
-		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-	}
-	
-	public void resetEncoders() {
-		rightEncoder.reset();
-		leftEncoder.reset();
-	}
-	
-	public void autoTestDrive(){
-		
-		rDrive.arcadeDrive(0, -0.5);
-	}
-		
-	public void startTimer(){
-		
-		timer.reset();
-		timer.start();
-	}
-	
-	public void turnLeft() {
-		
-		timer.reset();
-		timer.start();
-		while (timer.get() < 1.3)		
-		{
-			rDrive.arcadeDrive(0.0, -0.5);
-		}
-		/*gyro.reset();
-		//while doesn't work
-		//if doesn't print
-		if (gyro.getAngle() <= 90) {
-			rDrive.arcadeDrive(0.0, -0.5);
-			System.out.println(RobotDrive.gyro.getAngle());
-		}
-		*/
-	}
-	
-	public boolean checkturnRight() {
-		if(timer.get() > .675){
-			timer.reset();
+	public boolean checkTurn(){
+		if(Math.abs(Robot.imu.getAngleZ()) > 88 && Math.abs(Robot.imu.getAngleZ()) < 92){
+			turnStatus = "Complete";
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -139,7 +129,5 @@ public class RobotDrive extends Subsystem {
         // Set the default command for a subsystem here.
         setDefaultCommand(new DriveCommand());
     }
-    
-    
 }
 

@@ -27,7 +27,6 @@ public class ArmManipulator extends Subsystem{
 	
 	private WPI_TalonSRX actuatorTalon = new WPI_TalonSRX(RobotConstants.cActuator);
 	private double positionTarget = 390.0;
-	private double autoPosTarget = 310.0;
 	private int buttonToggle = 0;
 	private String actuatorPosition = "Start Position";
 
@@ -40,43 +39,29 @@ public class ArmManipulator extends Subsystem{
 		actuatorTalon.config_kP(0, 25.25, 10); //25.25
 		actuatorTalon.config_kI(0, 0.00015, 10); //.00015
 		actuatorTalon.config_kD(0, 0.0, 10);
-		actuatorTalon.configForwardSoftLimitThreshold(450, 0);
-		actuatorTalon.configForwardSoftLimitEnable(false, 0);
+		actuatorTalon.configForwardSoftLimitThreshold(400, 0);
+		actuatorTalon.configForwardSoftLimitEnable(true, 0);
 		actuatorTalon.configReverseSoftLimitThreshold(15, 0);
 		actuatorTalon.configReverseSoftLimitEnable(false, 0);
-		
 	}
 	//SELECT FEEDBACK SENSOR
 	public void selectSensor(){
 		
 		//Pot
 		actuatorTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
-		//actuatorTalon.setSelectedSensorPosition(0, 0, 0);
 		
 	}
 	//OUTPUT INFO TO SMARTDASHBOARD
-	public void printSelectedPosition(){
+	public void printArmInfo(){
 		
 		SmartDashboard.putString("Selected Position", actuatorPosition);
-		
-	}
-	
-	public void printMotorVoltage(){
-		
 		SmartDashboard.putNumber("Actuator Talon Voltage", actuatorTalon.getMotorOutputVoltage());
-		
-	}
-	
-	public void printSensorPosition(){
-		
 		SmartDashboard.putNumber("Potentiometer Position", actuatorTalon.getSelectedSensorPosition(0));
-		
 	}
 	//CLOSED LOOP POSITION SETTING
 	public void setPosition(){
 		
-		actuatorTalon.set(ControlMode.Position, positionTarget);
-			
+		actuatorTalon.set(ControlMode.Position, positionTarget);	
 	}
    
     public void setGroundPosition(){
@@ -90,27 +75,23 @@ public class ArmManipulator extends Subsystem{
     	
     	positionTarget = RobotConstants.exchangePosition;
     	actuatorPosition = "Exchange Position";
-    	
     }
     
     public void setSwitchPosition(){
     	
     	positionTarget = RobotConstants.switchPosition;
     	actuatorPosition = "Switch Position";
-    	
     }
     
     public void setStartPosition(){
     	
     	positionTarget = RobotConstants.startPosition;
     	actuatorPosition = "Start Position";
-    	
     }
     //OPEN LOOP POSITION SETTING
     public void setRawPosition(){
     	
-    	actuatorTalon.set(ControlMode.PercentOutput, Robot.oi.getButtonPanelAxis() * 0.25);
-    		
+    	actuatorTalon.set(ControlMode.PercentOutput, Robot.oi.getButtonPanelAxis() * 0.35);		
     }
     //SWITCH CONTROL MODE
     public void checkButtonToggle(){
@@ -127,27 +108,19 @@ public class ArmManipulator extends Subsystem{
     		setPosition();
     		SmartDashboard.putString("Control Mode", "Position");
     	}
-    	
     }
     //AUTO CODE
-    public void armAuto(){
-    	actuatorTalon.set(ControlMode.Position, autoPosTarget);
-    	
-    }
     
     public boolean armAutoCheck(){
-    	if(actuatorTalon.getSelectedSensorPosition(0) > autoPosTarget - 1 && actuatorTalon.getSelectedSensorPosition(0) > autoPosTarget + 1){
+    	if(actuatorTalon.getSelectedSensorPosition(0) > positionTarget - 4 && actuatorTalon.getSelectedSensorPosition(0) > positionTarget + 4){
     		return true;
     	}
-    	return false;
-    	
+    	return false;  	
     }
 
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		
 		setDefaultCommand(new ArmCommand());
-    	
     }
 }

@@ -1,13 +1,10 @@
 package org.usfirst.frc.team5924.robot.subsystems;
 
-import org.usfirst.frc.team5924.robot.Robot;
 import org.usfirst.frc.team5924.robot.RobotConstants;
 import org.usfirst.frc.team5924.robot.commands.CubeCommand;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,20 +21,21 @@ public class CubeManipulator extends Subsystem {
 	
 	private double cubeMotorSpeed = 0;
 	
-	Timer intakeTimer = new Timer();
-	Timer outtakeTimer = new Timer();
+	private Timer intakeTimer = new Timer();
+	private Timer outtakeTimer = new Timer();
+	
+	private boolean autoMotorStatus;
+	private String cubeGrabberStatus = "";
 	
 	public CubeManipulator(){
 		
 	}
 	
-	public void printCubeManipulatorStatus(){
+	public void printCubeInfo(){
 		
-		//SmartDashboard.putString("Cube State", cubeGrabberStatus);
-		//SmartDashboard.putString("Cube Motor State", cubeMotorStatus);
+		SmartDashboard.putString("Cube State", cubeGrabberStatus);
 		SmartDashboard.putNumber("Intake Timer", intakeTimer.get());
 		SmartDashboard.putNumber("Outtake Timer", outtakeTimer.get());
-		SmartDashboard.putNumber("Cube Motor Speed", cubeMotorSpeed);
 		SmartDashboard.putNumber("Cube Left Motor", leftMotor.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Cube Right Motor", rightMotor.getMotorOutputVoltage());
 		
@@ -50,32 +48,52 @@ public class CubeManipulator extends Subsystem {
 		if(intakeTimer.get() > 1.5 && leftMotor.getMotorOutputVoltage() < 5.3 && rightMotor.getMotorOutputVoltage() > -5.3){
 			
 			cubeMotorSpeed = 0;
+			intakeTimer.stop();
+			intakeTimer.reset();
+			cubeGrabberStatus = "Intake Done";
+			
 			
 		} else if(outtakeTimer.get() > 1){
 			
 			cubeMotorSpeed = 0;
+			outtakeTimer.stop();
+			outtakeTimer.reset();
+			cubeGrabberStatus = "Outtake Done";
+			
+		}	
+	}
+	
+	public boolean checkCubeAuto(){
+		
+		if(outtakeTimer.get() > 1){
+			outtakeTimer.stop();
+			outtakeTimer.reset();
+			return true;
+			
+		}else if(intakeTimer.get() > 1.5 && leftMotor.getMotorOutputVoltage() < 5.3 && rightMotor.getMotorOutputVoltage() > -5.3){
+			intakeTimer.stop();
+			intakeTimer.reset();
+			return true;
 		}
-			
-			
+		
+		return false;
 	}
 
 	public void intakeCube(){
 		
-		outtakeTimer.reset();
-		outtakeTimer.stop();
-		intakeTimer.reset();
 		intakeTimer.start();
 		cubeMotorSpeed = 0.5;
+		cubeGrabberStatus = "Intake";
+		
 	}
 	
 	public void outtakeCube(){
 		
-		intakeTimer.reset();
-		intakeTimer.stop();
-		outtakeTimer.reset();
 		outtakeTimer.start();
 		cubeMotorSpeed = -0.5;
+		cubeGrabberStatus = "Outtake";
     }
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

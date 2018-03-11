@@ -24,7 +24,7 @@ public class RampCommand extends Command {
     protected void execute() {
     	
     	/**
-    	Robot.kRampManipulator.printSelectedSensorPos();
+    	Robot.kRampManipulator.printRampInfo();
 		
 		if(Robot.oi.getGroundPosButton()){
 			Robot.kRampManipulator.setBackRampVerticalPosition();
@@ -37,7 +37,6 @@ public class RampCommand extends Command {
 		Robot.kRampManipulator.setBackRampPosition();
 		Robot.kRampManipulator.setFrontRampPosition();
 		**/
-		
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -33,11 +33,6 @@ public class RobotConstants {
 		public static double bRampVerticalPosition = 1024.0;
 		public static double fRampDownPosition = 1536.0;
 		
-		//MOTOR SPEEDS
-		public static double rightMotorOutput = -0.5;
-		public static double leftMotorOutput = 0.5;
-		public static double rampMotorOutput = 0.5;
-		
 		//BUTTON PANEL
 		public static int groundPosButton = 3;
 		public static int exchangePosButton = 5;

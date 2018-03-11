@@ -22,20 +22,15 @@ public class CubeCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.kCubeManipulator.printCubeManipulatorStatus();
-		// CUBE MANIPULATOR
+    	Robot.kCubeManipulator.printCubeInfo();
+		Robot.kCubeManipulator.runCubeMotor();
     	
 		if(Robot.oi.getIntakeButton()){
 			Robot.kCubeManipulator.intakeCube();
 			
 		} else if (Robot.oi.getOuttakeButton()){
 			Robot.kCubeManipulator.outtakeCube();
-
 		}
-		
-		Robot.kCubeManipulator.runCubeMotor();
-		
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
